@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Bubble Chart</title>
+<meta charset="UTF-8">
+<link rel="shortcut icon" href="./img/bookmark.ico">
+
+<style>
+	
+	.zoom_in {
+		cursor: -moz-zoom-in; 
+		cursor: -webkit-zoom-in; 
+		cursor: zoom-in;
+	}
+	.zoom_out {
+		cursor: -moz-zoom-out; 
+		cursor: -webkit-zoom-out; 
+		cursor: zoom-out;
+	}
+	
+	#canvasScreenID, #zoom {
+		display: inline-block;
+	}
+	
+	#zoom {
+		position:absolute; 
+		top:0; 
+		left:0; 
+		display:none; 
+		border:1px black solid; 
+		box-shadow: 5px 5px 10px #1e1e1e;
+	}
+	
+	body {
+		background-color: #e5e5e5;
+	}
+	
+	.toolwrapper {
+		display: inline-block;
+		width: 700px;
+		text-align: left;
+		border: 3px solid black;
+		padding-left: 10px;
+		padding-right: 10px;
+		margin-bottom: 10px;
+		background-color: #FFFFFF;
+		position: relative;
+	}
+	
+	.copyright {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		padding-right: 3px;
+		padding-top: 1px;
+	}
+	
+</style>
+
+
+<!-- LOAD JAVASCRIPT LIBRARIES: -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+</head>
+<body style="text-align: center;">
+
+<div>
+	<div class="toolwrapper">
+		<div class="copyright">06/04/2017</div>
+		
+		<!--<h2>K-State Global Campus Database Associations Map</h2>-->
+		<h2>SQL Database Associations Map</h2>
+
+		<p>
+			Select a database to view its backend/frontend associations: 
+		</p>
+		<p>
+			<select id="selectDb" onchange="generateMapSelect(this.value)"></select>
+			Show degrees of separation:
+			<select id="selectRecsv" onchange="generateMapSelect(document.getElementById('selectDb').value)"></select>
+			<img id="processing" src=".\img\processing.gif" style="display: none;">
+		</p>
+		<p>
+			Fit to display:
+			<select id="selectFit" onchange="generateMapSelect(document.getElementById('selectDb').value)">
+				<option value="resize">resize</option>
+				<option value="scale">scale</option>
+			</select>
+		</p>
+		<p>
+			Backend databases are square and rimmed in dark blue, frontend applications are rounded and colorful.
+		</p>
+	</div>
+</div>
+
+<canvas id="canvasScreenID"></canvas>
+<canvas id="zoom" width="400" height="200"></canvas>
+
+<!--<div id="myFile" style="display: none;"></div>-->
+<div id="myFile" style="display: none;">10055 Mailing List - Superintendents.xls,MailJet_Manager.accdb
+123.123.12.123 (ODBC),Auxil_Explorer_Back.accdb
+123.123.12.123 (ODBC),Auxil_Explorer_Back_New.accdb
+123.123.12.123 (ODBC),Postal.accdb
+1stImpressions,1stImpressions.mdb
+1stImpressions.xls,1stImpressions.mdb
+2+2 Tracking System Back.accdb,2+2 Tracking System.accdb
+Abila MIP Download.xlsx,MIP_Importer.accdb
+Abila MIP Refunds Download.xlsx,MIP_Importer.accdb
+AbilaMIP (ODBC),MIP_Importer.accdb
+ACCT,TestMod.mdb
+Advising_BackEnd.accdb,Advising_User.accdb
+Alumni (ODBC),Alumni.accdb
+Application Report.xls,Advising_BackEnd.accdb
+Application Report.xls,Advising_User.accdb
+Application Report.xlsx,BDC_Apps.accdb
+Contacts (ODBC),Contacts.accdb
+Contacts_Admin (ODBC),Contacts.accdb
+CRTEST,pdox_detail_merge.mdb
+CSTD_Inventory_BackEnd.accdb,CSTD_INVENTORY.accdb
+DB,pdox_detail_merge.mdb
+DB_MASTER_KCCTO_Courses.accdb,SQL Server Migration Helper.accdb
+DB_MASTER_SfsLocalCache.accdb,SFS_MissingData_Importer.accdb
+DB_MASTER_SfsLocalCache.accdb,SFS11_User.accdb
+DB_MASTER_WordMergeReports.accdb,CoursesForEducatorsBrochure.accdb
+DBLocations (ODBC),DatabaseLocations.accdb
+DCEInventoryMain.accdb,DCEInventoryUser2007.accdb
+DCEInventoryMain.mdb,DCEInventoryUser2007.accdb
+Distance Learning Grads.xlsx,Alumni.accdb
+EISP (ODBC),Accounting.accdb
+EISP (ODBC),Accounting_Test.accdb
+EISP (ODBC),Advising_User.accdb
+EISP (ODBC),Auxil_Explorer_Back.accdb
+EISP (ODBC),Auxil_Explorer_Back_New.accdb
+EISP (ODBC),Auxil_Explorer_User.accdb
+EISP (ODBC),CoursesForEducatorsBrochure.accdb
+EISP (ODBC),EIS-KSIS accounting.accdb
+EISP (ODBC),FinanceOfficePayrollSystem2007.accdb
+EISP (ODBC),MIP_Importer.accdb
+EISP (ODBC),Postal.accdb
+EISP (ODBC),Postal_User.accdb
+EISP (ODBC),SFS_MissingData_Importer.accdb
+EISP (ODBC),SFS11_User.accdb
+EISP (ODBC),TestMod.mdb
+EISP (ODBC),WebDb_User.accdb
+EmailLists (ODBC),Address_Tools.accdb
+EmailLists (ODBC),CampaignStatisticReports.accdb
+EmailLists (ODBC),KSIS_Manager.accdb
+EmailLists (ODBC),MailJet_Manager.accdb
+EmailLists (ODBC),Retention.accdb
+esl.mdb,ESL_User.mdb
+filetoimport.xls,CoursesForEducatorsBrochure.accdb
+filetoimport.xls,KSIS_Manager.accdb
+filetoimport.xlsx,CampaignStatisticReports.accdb
+filetoimport.xlsx,Retention.accdb
+filetoimport_grads.xls,KSIS_Manager.accdb
+FinanceOfficeAccounting (ODBC),Accounting.accdb
+FinanceOfficeAccounting (ODBC),Accounting_Test.accdb
+FinanceOfficeAccounting (ODBC),Auxil_Explorer_User.accdb
+FinanceOfficeAccounting (ODBC),EIS-KSIS accounting.accdb
+FinanceOfficeAccounting (ODBC),MIP_Importer.accdb
+FinanceOfficeAccounting (ODBC),Postal_User.accdb
+FinanceOfficePayroll (ODBC),FinanceOfficePayrollSystem2007.accdb
+FinanceOfficePayroll (ODBC),MIP_Importer.accdb
+Global Campus alumni in Kansas.xlsx,MailJet_Account.accdb
+Global Campus alumni in Kansas.xlsx,SFS_MailJet_Reporting.accdb
+GlobalCampusFiles (ODBC),GlobalCampusFiles.accdb
+GrantFundedProjects (ODBC),GFP.accdb
+GrdSchDotComNew_Back.accdb,GrdSchDotCom_User.accdb
+Information_Request.csv,Qualtrics_BackEnd.accdb
+Information_Request.csv,Qualtrics_User.accdb
+Inventory (ODBC),GC_Inventory_v2017.accdb
+IS_Inventory_BackEnd.accdb,DCEInventoryUser2007.accdb
+IS_Inventory_BackEnd.accdb,IS_INVENTORY.accdb
+JMIH (ODBC),JMIH.accdb
+KSIS (ODBC),Address_Tools.accdb
+KSIS (ODBC),KSIS_Manager.accdb
+KSIS (ODBC),Retention.accdb
+KSIS (ODBC),SFS_MissingData_Importer.accdb
+KSIS (ODBC),SFS11_User.accdb
+KState.accdb,Advising_User.accdb
+MailJet (ODBC),CampaignStatisticReports.accdb
+MailJet (ODBC),MailJet_Manager.accdb
+MailJet (ODBC),MCS_Checklist.accdb
+MCS (ODBC),CampaignStatisticReports.accdb
+MCS (ODBC),MailJet_Manager.accdb
+MCS (ODBC),MCS_Checklist.accdb
+MCS_Billing (ODBC),Auxil_Explorer_User.accdb
+MCS_Billing (ODBC),MIP_Importer.accdb
+MCS_Billing (ODBC),Postal_User.accdb
+monthly.txt,Auxil_Explorer_Back.accdb
+monthly.txt,Auxil_Explorer_Back_New.accdb
+monthly.txt,TestMod.mdb
+MONTHLYCPSEXPORT.xlsx,Auxil_Explorer_User.accdb
+New_ESL.mdb,NewEsl_User.mdb
+Paradox Conference Conversion.accdb,GoMembersDownloader.accdb
+Programs (ODBC),ProgramsDatabase.accdb
+Programs (ODBC),Retention.accdb
+Public (ODBC),EnroleReport_Downloader.accdb
+Public (ODBC),EnroleReport_RegistrationsCrosstab.accdb
+Qualtrics_BackEnd.accdb,Qualtrics_User.accdb
+RawApplicationt.xlsx,BDCP_Apps.accdb
+RawList.txt,GrdSchDotCom_User.accdb
+Retention (ODBC),Retention.accdb
+RodBackEnd.accdb,Rod_User.accdb
+SFS (ODBC),Advising_User.accdb
+SFS (ODBC),CampaignStatisticReports.accdb
+SFS (ODBC),SFS_MailJet_Reporting.accdb
+SFS (ODBC),SFS_MissingData_Importer.accdb
+SFS (ODBC),SFS11_User.accdb
+STUDENT_v1.3BackEnd.mdb,STUDENT_v1.3_USER.mdb
+TaskManager (ODBC),MailJet_Manager.accdb
+TaskManager (ODBC),TaskManager.accdb
+TrakData (ODBC),GoMembersDownloader.accdb
+TrakData (ODBC),mtksql.accdb
+TrakData2 (ODBC),mtksql.accdb
+traktemp.accdb,mtksql.accdb
+TripleNames.xlsx,Address_Tools.accdb
+UiOpener (ODBC),CampaignStatisticReports.accdb
+UiOpener (ODBC),Contacts.accdb
+UiOpener (ODBC),DatabaseLocations.accdb
+UiOpener (ODBC),KSIS_Manager.accdb
+UiOpener (ODBC),MailJet_Manager.accdb
+UiOpener (ODBC),SFS11_User.accdb
+UiOpener (ODBC),TaskManager.accdb
+WebDbBackEnd.accdb,WebDb_User.accdb</div>
+
+</body>
+
+<script>
+	//$("#myFile").load("qryExport.txt");
+	//readTextFile("qryExport.txt");
+	
+	function isChrome() {
+		var isChromium = window.chrome,
+			winNav = window.navigator,
+			vendorName = winNav.vendor,
+			isOpera = winNav.userAgent.indexOf("OPR") > -1,
+			isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+			isIOSChrome = winNav.userAgent.match("CriOS");
+		
+		if(isIOSChrome){
+			return true;
+		} else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+			return true;
+		} else { 
+			return false;
+		}
+	}
+	if (isChrome() !== true) {
+		alert("It is recommended that Chrome be used to view this page!");
+	}
+	
+</script>
+
+<script src=".\js\string_width.js"></script>
+<script src=".\js\readtxt.js"></script>
+<script src=".\js\csv_reader.js"></script>
+<script src=".\js\csvtoarray.js"></script>
+<script src=".\js\collision.js"></script>
+<script src=".\js\canvas_roundedrectangle.js"></script>
+<script src=".\js\colorisdark.js"></script>
+
+<script src=".\js\bubble.js?_=1"></script>
+<script src=".\js\dorylovesbubbles.js?_=1"></script>
+
+<script>
+	var main = document.getElementById("canvasScreenID");
+	var zoom = document.getElementById("zoom");
+	var ctx = main.getContext("2d")
+	var zoomCtx = zoom.getContext("2d");
+	
+	var str = document.getElementById('myFile').innerHTML;
+	var n = str.indexOf("\n");
+	//alert('newline: ' + n);
+	
+</script>
+

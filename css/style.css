@@ -31,6 +31,22 @@ html, body {
 	font-family: arial;
 }
 
+#ajaxloading {
+	width: 100px;
+	height: 15px;
+	position: absolute;
+	top: calc(50% - 17px);
+	left: calc(50% - 50px);
+}
+#content-wrapper {
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 .scrollFade {
 	position: relative;
 }

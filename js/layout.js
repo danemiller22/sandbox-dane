@@ -2,6 +2,8 @@ var pageLoad = (function(){
 	
 	//alert(performance.now());
 	
+	$("#ajaxloading").hide();
+	$("#content-wrapper").show();
 	$("#portraitImg").show(); // hide portrait until page is fully loaded
 	
 	

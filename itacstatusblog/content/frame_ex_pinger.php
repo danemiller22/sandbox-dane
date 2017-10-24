@@ -113,7 +113,7 @@
 		printPingDomain('webmail.ksu.edu', 'Webmail');
 		//printPingDomain('pod51042.outlook.com', 'Outlook Server');
 		printPingDomain('ksu.edu', 'K-State Home');
-		printPingDomain('ksis.ksu.edu', 'iSIS');
+		printPingDomain('ksis.ksu.edu', 'KSIS');
 		printPingDomain('hris.ksu.edu', 'HRIS');
 	?>
 </div>

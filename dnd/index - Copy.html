@@ -54,10 +54,9 @@
 		position: absolute;
 		left: 310px;
 		top: 5px;
-		height: calc(100% - 10px);
+		height: calc(100% - 50px);
 		//width: 380px;
 		width: calc(100% - 320px);
-		overflow-y: scroll;
 	}
 	
 	label
@@ -104,7 +103,7 @@
 
 <div class="mycontainer" id="npc1">
 	<iframe class="myiframe" src="
-	http://rpgtinker.com/index.php?template=Soldier&race=Human&radioattribute=Standard+Array+%2815%2C14%2C13%2C12%2C10%2C8%29&numberofhitdice=20&hitdice=d8
+	http://rpgtinker.com/index.php?template=Soldier&race=Human&radioattribute=Standard+Array+%2815%2C14%2C13%2C12%2C10%2C8%29&numberofhitdice=6&hitdice=d8
 	
 	"></iframe>
 	
@@ -116,10 +115,10 @@
 		&nbsp;&nbsp;
 		
 		<span style="white-space:nowrap;"><label for="hit">Token:</label><input type="text" name="token" style="width:65px;"></input></span>
-		<label for="notes">Notes/Conditions:</label><textarea type="textarea" name="notes" style="width:100%;height:100px;"></textarea>
 		<br/>
 		Spells:
 		<div id="myspelllist"></div>
+		<label for="notes">Notes/Conditions:</label><textarea type="textarea" name="notes" style="width:100%;height:calc(100% - 320px);"></textarea>
 	</div>
 </div>
 
@@ -1968,7 +1967,7 @@
 
 //javascript stuff goes here.
 
-var url = "http://rpgtinker.com/index.php?template=Soldier&race=Human&radioattribute=Standard+Array+%2815%2C14%2C13%2C12%2C10%2C8%29&numberofhitdice=10&hitdice=d8";
+var url = "http://rpgtinker.com/index.php?template=Soldier&race=Human&radioattribute=Standard+Array+%2815%2C14%2C13%2C12%2C10%2C8%29&numberofhitdice=2&hitdice=d8";
 
 /*
 .get('a.html', null, function(text){
@@ -2018,7 +2017,7 @@ window.onload = function() {
 		//var maxspells = getRandomInt(5);
 		//for(var i = 0; i < maxspells; i++) getRandomSpell(getRandomInt(3)-1);
 		
-		/*
+		
 		//console.log('savant=' + S_GET('savant'));
 		if (S_GET('savant') == 1)
 		{
@@ -2035,43 +2034,18 @@ window.onload = function() {
 			console.log('is not a savant');
 			
 			// CANTRIPS
-			getSpellsOfLevel(0,0,6);
+			getSpellsOfLevel(0,0,3);
 			
 			// 1ST LVL
-			getSpellsOfLevel(1,0,4);
+			getSpellsOfLevel(1,3,2);
 			
 			// 2ND LVL
-			getSpellsOfLevel(2,0,4);
+			getSpellsOfLevel(2,4,0);
 			
 			// 3RD LVL
-			getSpellsOfLevel(3,0,4);
-			
-			// $TH LVL +
-			getSpellsOfLevel(4,0,4);
-			getSpellsOfLevel(5,0,4);
-			getSpellsOfLevel(6,0,4);
-			getSpellsOfLevel(7,0,4);
-			getSpellsOfLevel(8,0,4);
-			getSpellsOfLevel(9,0,4);
+			getSpellsOfLevel(3,4,-1);
 		}
-		*/
 		
-		
-		// CANTRIPS
-		getSpellsOfLevel(0,0,6);
-		// 1ST LVL
-		getSpellsOfLevel(1,0,4);
-		// 2ND LVL
-		getSpellsOfLevel(2,0,4);
-		// 3RD LVL
-		getSpellsOfLevel(3,0,4);
-		// $TH LVL +
-		getSpellsOfLevel(4,0,4);
-		getSpellsOfLevel(5,0,4);
-		getSpellsOfLevel(6,0,4);
-		getSpellsOfLevel(7,0,4);
-		getSpellsOfLevel(8,0,4);
-		getSpellsOfLevel(9,0,4);
 		
 		
 	};

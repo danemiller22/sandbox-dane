@@ -9,6 +9,8 @@ function Victim(sprite, x, y, angle, xspeed, yspeed, anglespeed)
 	this.angleaccelleration = 300;
 
 	this.smart = 300;
+	
+	this.radius = 16;
 
 	this.boomtimer = 0;
 }

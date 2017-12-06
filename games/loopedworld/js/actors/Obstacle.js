@@ -10,6 +10,8 @@ function Obstacle(sprite, x, y, angle, xspeed, yspeed, anglespeed)
 	
 	this.mass = 0; //10.0;
 	
+	this.radius = 8;
+	
     this.smart = 200; //this.getRadius * 2;
 }
 // ====== WORLD OBJECT ======

@@ -45,13 +45,19 @@ function Actor(sprite, x, y, angle, xspeed, yspeed, anglespeed)
 
 
 // ====== GET AND SET ======
-Actor.prototype.getCollisionRadius = function(){
-	if (this.hasOwnProperty('radius'))
-		return this.radius;
-	else if (this.getSprite() && this.getSprite().hasOwnProperty('size'))
-		return this.getSprite().size[0] * this.scale/2; // For spherical collision-checks
+Actor.prototype.getRadius = function () {
+	if (this.hasOwnProperty('radius')) {
+		console.log(this.actortype + " using actor radius");
+		return (this.radius * this.scale);
+	} else if (this.getSprite() && this.getSprite().hasOwnProperty('size')) {
+		console.log(this.actortype + " using sprite size");
+		return (this.getSprite().size[0] * this.scale)/2; // For spherical collision-checks
+	}
 	return 20; // default
 };
+//Actor.prototype.getCollisionRadius = function(){
+//	return this.getRadius();
+//};
 Actor.prototype.getSprite = function(){ // "getSprite" ??? !!!
 	if (this.hasOwnProperty('sprite')) return this.sprite;
 
@@ -240,18 +246,27 @@ Actor.prototype.renderSprite = function (x, y) {
 	}
 	*/
 	
+	// Render sprite
 	ctx.rotate((this.angle) * TO_RADIANS);
 	ctx.scale(this.scale, this.scale);
 	ctx.translate(-this.scale*this.getSprite().size[0]/2, -this.scale*this.getSprite().size[1]/2);
 	this.getSprite().render(ctx);
 	//this.sprite.update(); // ???
-
+	
+	/*
+	// Render collision radius
+	ctx.translate(this.scale*this.getSprite().size[0]/2, this.scale*this.getSprite().size[1]/2);
+	ctx.beginPath();
+	ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+	ctx.lineWidth = 1;
+	ctx.arc(0, 0, this.getRadius(), 0, 2 * Math.PI, false);
+	ctx.stroke();
+	*/
+	
 	ctx.restore();
 };
 
-Actor.prototype.getRadius = function () {
-	return (this.getSprite().size[0] * this.scale)/2;
-};
+
 
 Actor.prototype.isColliding = function (target) {
 	if (this === target) return false;

@@ -99,7 +99,7 @@
 						global $fileTypeIsValid;
 						
 						$filename = strtolower($filename) ; 
-						$exts = split("[/\\.]", $filename) ; 
+						$exts = explode("[/\\.]", $filename) ; 
 						$n = count($exts)-1; 
 
 						// Write any scripts that check for unwanted extensions here!

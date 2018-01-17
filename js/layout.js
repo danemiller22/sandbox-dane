@@ -100,6 +100,7 @@ var pageLoad = (function(){
 		applyRandomColorGradients("left");
 	}
 	
+	/*
 	// FANCY FADE IN/OUT OF PAGE ELEMENTS WHILE SCROLLING
 	// Reset scroll fade
 	$('.scrollFade').each(function(){
@@ -180,7 +181,7 @@ var pageLoad = (function(){
 		scrollFade();
 		
 	}
-	
+	*/
 	
 	// Animated Code Gradient Fade
 	function gradientAnimated()

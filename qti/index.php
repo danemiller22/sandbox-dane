@@ -99,7 +99,8 @@
 						global $fileTypeIsValid;
 						
 						$filename = strtolower($filename) ; 
-						$exts = preg_split("[/\\.]", $filename) ; 
+						//$exts = split("[/\\.]", $filename) ; 
+						$exts = preg_split("[/\\.]", $filename) ;
 						$n = count($exts)-1; 
 
 						// Write any scripts that check for unwanted extensions here!
@@ -1143,8 +1144,10 @@ $txt = '<?xml version="1.0"?>
 	<h1 class="header">Axio to Canvas (QTI 2.0) Converter</h1>
 	<div id="phpErrorBox">
 		<?php
-			if ($error != "")
+			if ($error != ""){
 				echo '<p><div class="inputDiv">'. $error .'</div></p>';
+				echo '<p><div class="inputDiv">Current PHP version'. phpversion() .'</div></p>';
+			}
 		?>
 	</div>
 	<form enctype="multipart/form-data" name="zips" method="post">

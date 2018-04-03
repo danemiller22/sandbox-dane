@@ -1376,7 +1376,7 @@ function renderMinimap(ctx, canvas, offsetScale, minimap)
 	// Draw sun aura
 	ctx.beginPath();
 	ctx.fillStyle = 'white';
-	ctx.arc(0, 0, (2000*offsetScale*0.5), 0, 2 * Math.PI);
+	ctx.arc(xOffset, yOffset, (2000*offsetScale*0.5), 0, 2 * Math.PI);
 	ctx.fill();
 	
 	// Draw sun

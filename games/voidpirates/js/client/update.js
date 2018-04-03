@@ -1373,18 +1373,21 @@ function renderMinimap(ctx, canvas, offsetScale, minimap)
 	ctx.arc(xOffset, yOffset, (minimap.worldsize*offsetScale), 0, 2 * Math.PI);
 	ctx.stroke();
 	
-	// Draw sun aura
-	ctx.beginPath();
-	ctx.fillStyle = 'white';
-	ctx.arc(xOffset, yOffset, (2000*offsetScale*0.5), 0, 2 * Math.PI);
-	ctx.fill();
-	
 	// Draw sun
 	ctx.beginPath();
 	ctx.fillStyle = 'yellow';
 	for(var i=0; i<minimap.map.length; i++) {
-		if (minimap.map[i].actortype == "sun")
+		if (minimap.map[i].actortype == "sun") {
 			rendeMinimapEntity(ctx, canvas, offsetScale, minimap.map[i]);
+			
+			// Draw sun aura
+			var xOffset = (minimap.map[i].x-player.x)*offsetScale + canvas.width/2;
+			var yOffset = -(minimap.map[i].y-player.y)*offsetScale + canvas.height/2;
+			ctx.beginPath();
+			ctx.arc(xOffset, yOffset, (2000*offsetScale), 0, 2 * Math.PI);
+			ctx.stroke();
+			
+		}
 	}
 	ctx.fill();
 	

@@ -1388,6 +1388,8 @@ function renderMinimap(ctx, canvas, offsetScale, minimap)
 			var yOffset = -(minimap.map[i].y-player.y)*offsetScale + canvas.height/2;
 			ctx.beginPath();
 			ctx.fillStyle = 'white';
+			ctx.strokeStyle = 'white';
+			ctx.lineWidth = 0.4;
 			ctx.arc(xOffset, yOffset, (2000*offsetScale), 0, 2 * Math.PI);
 			ctx.stroke();
 			

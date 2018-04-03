@@ -1390,7 +1390,7 @@ function renderMinimap(ctx, canvas, offsetScale, minimap)
 			ctx.fillStyle = 'white';
 			ctx.strokeStyle = 'white';
 			ctx.lineWidth = 0.4;
-			ctx.arc(xOffset, yOffset, (1700*offsetScale), 0, 2 * Math.PI);
+			ctx.arc(xOffset, yOffset, (1650*offsetScale), 0, 2 * Math.PI);
 			ctx.stroke();
 			
 		}

@@ -1374,10 +1374,10 @@ function renderMinimap(ctx, canvas, offsetScale, minimap)
 	ctx.stroke();
 	
 	// Draw sun
-	
 	for(var i=0; i<minimap.map.length; i++) {
 		if (minimap.map[i].actortype == "sun") {
 			
+			// Draw sun entity
 			ctx.beginPath();
 			ctx.fillStyle = 'yellow';
 			rendeMinimapEntity(ctx, canvas, offsetScale, minimap.map[i]);

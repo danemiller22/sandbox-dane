@@ -1372,7 +1372,14 @@ function renderMinimap(ctx, canvas, offsetScale, minimap)
 	var yOffset = -(-player.y)*offsetScale + canvas.height/2;
 	ctx.arc(xOffset, yOffset, (minimap.worldsize*offsetScale), 0, 2 * Math.PI);
 	ctx.stroke();
-
+	
+	// Draw sun aura
+	ctx.beginPath();
+	ctx.fillStyle = 'white';
+	ctx.arc(0, 0, (2000*offsetScale*0.5), 0, 2 * Math.PI);
+	ctx.fill();
+	
+	// Draw sun
 	ctx.beginPath();
 	ctx.fillStyle = 'yellow';
 	for(var i=0; i<minimap.map.length; i++) {

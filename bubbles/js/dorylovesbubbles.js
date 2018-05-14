@@ -9,7 +9,7 @@
     var canvas = document.getElementById('canvasScreenID'); //document.createElement("canvas");
     var ctx = canvas.getContext("2d");
     canvas.style.display='inline-block';
-    canvas.style.border='3px dashed black';
+    //canvas.style.border='3px dashed black';
 	canvas.width = canvasSize;
     canvas.height = canvasSize;
     //canvas.style.margin='auto';

@@ -15,6 +15,7 @@
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
+  opacity: 0.3;
 }
 #particles2-js {
   background-color: rgba(255, 255, 255, 0.45);
@@ -217,17 +218,17 @@ table tr td h3
 .rightFrame > h3, .gradientRight {
 	padding-left: 10px;
 	background: transparent; /* For browsers that do not support gradients */
-	background: -webkit-linear-gradient(left, #ddd, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(right, #ddd, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(right, #ddd, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(to right, #ddd, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* Standard syntax */
+	background: -webkit-linear-gradient(left, #ddd, #ddd, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(right, #ddd, #ddd, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #ddd, #ddd, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #ddd, #ddd, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* Standard syntax */
 }
 .rightFrame {
 	background: transparent; /* For browsers that do not support gradients */
-	background: -webkit-linear-gradient(left, #eee, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(right, #eee, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(right, #eee, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(to right, #eee, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* Standard syntax */
+	background: -webkit-linear-gradient(left, #eee, #eee, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(right, #eee, #eee, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #eee, #eee, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #eee, #eee, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* Standard syntax */
 }
 .rightFrame > a {
 	//padding-left: 10px;
@@ -249,10 +250,10 @@ table tr td h3
 /* folded page corner */
 .note, #note {
 	background: transparent; /* For browsers that do not support gradients */
-	background: -webkit-linear-gradient(top right, #888888, #888888, rgba(255,255,255, 0.0)); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(bottom left, #888888, #888888, rgba(255,255,255, 0.0)); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(bottom left, #888888, #888888, rgba(255,255,255, 0.0)); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(to bottom left, #888888, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* Standard syntax */
+	background: -webkit-linear-gradient(top, #888888, #888888, rgba(255,255,255, 0.0)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(bottom, #888888, #888888, rgba(255,255,255, 0.0)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(bottom, #888888, #888888, rgba(255,255,255, 0.0)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to bottom, #888888, rgba(255,255,255, 0.0), rgba(255,255,255, 0.0), rgba(255,255,255, 0.0)); /* Standard syntax */
 }
 .note:before {
 	content: "";

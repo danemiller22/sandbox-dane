@@ -146,6 +146,7 @@ var initparticles = (function(){
 
 
 	/* Large Particles */
+	/*
 	particlesJS('particles2-js',
 	  
 	  {
@@ -266,9 +267,10 @@ var initparticles = (function(){
 	  }
 
 	);
-
+	*/
 
 	/* Huge Particles */
+	/*
 	particlesJS('particles3-js',
 	  
 	  {
@@ -389,6 +391,7 @@ var initparticles = (function(){
 	  }
 
 	);
+	*/
 	
 });
 //window.onload = initparticles;

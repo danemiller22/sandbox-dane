@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Database Map</title>
+<meta charset="UTF-8">
+<link rel="shortcut icon" href=".\img\bookmark.ico">
+<!--<link rel="shortcut icon" href="C:\Users\Public\Documents\bin\icons\logo_wildcats.ico">-->
+
+<style>
+	
+	html, body { 
+		text-align: left; 
+		margin: 0px; 
+		padding: 0px; 
+		height: 100%; 
+		width: 100%; 
+		font-family: calibri; 
+	}
+	
+	.title-header {
+		font-weight: bold;
+		font-size: 18px;
+	}
+	
+	.zoom_in {
+		cursor: -moz-zoom-in; 
+		cursor: -webkit-zoom-in; 
+		cursor: zoom-in;
+	}
+	.zoom_out {
+		cursor: -moz-zoom-out; 
+		cursor: -webkit-zoom-out; 
+		cursor: zoom-out;
+	}
+	
+	#canvasScreenID, #zoom {
+		display: inline-block;
+	}
+	
+	#zoom {
+		position:absolute; 
+		top:0; 
+		left:0; 
+		display:none; 
+		border:1px black solid; 
+		box-shadow: 5px 5px 10px #1e1e1e;
+	}
+	
+	.toolwrapper {
+		text-align: left;
+		border-bottom: 1px solid black;
+		padding: 5px;
+		position: relative;
+	}
+	
+	.toolwrapper > div {
+		margin-bottom: 5px;
+	}
+	
+	.copyright {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		padding-right: 3px;
+		padding-top: 1px;
+	}
+	
+</style>
+
+
+<!-- LOAD JAVASCRIPT LIBRARIES: -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+</head>
+<body>
+
+<div id="datemodified" class="copyright">04/06/2018</div>
+
+<div class="toolwrapper">
+	
+	<div class='title-header'>SQL Database Associations Map</div>
+
+	<div>
+		Select a database to view its backend/frontend associations: 
+	</div>
+	<div>
+		<select id="selectDb" onchange="generateMapSelect(this.value)"></select>
+		Show degrees of separation:
+		<select id="selectRecsv" onchange="generateMapSelect(document.getElementById('selectDb').value)"></select>
+		<img id="processing" src=".\img\processing.gif" style="display: none;">
+	</div>
+	<div>
+		Backend databases are square and rimmed in dark blue, frontend applications are rounded and colorful.
+	</div>
+</div>
+
+<canvas id="canvasScreenID"></canvas>
+<canvas id="zoom" width="400" height="200"></canvas>
+
+<div id="myFile" style="display: none;">Abila MIP Download.xlsx,MIP_Importer.accdb
+Abila MIP Refunds Download.xlsx,MIP_Importer.accdb
+AbilaMIP (ODBC),Auxil_WorkZone.accdb
+AbilaMIP (ODBC),MIP_CanvasCourses_InternalAccounts.accdb
+AbilaMIP (ODBC),MIP_Importer.accdb
+Alumni (ODBC),Alumni.accdb
+Alumni (ODBC),Contacts.accdb
+Canvas (ODBC),Canvas_Reports.accdb
+Canvas (ODBC),CNCP_Programs.accdb
+CNCP_Programs (ODBC),CNCP_Programs.accdb
+Contacts (ODBC),Contacts.accdb
+Contacts_Admin (ODBC),Contacts.accdb
+DatabaseMap (ODBC),DatabaseMap.accdb
+DB_MASTER_SfsLocalCache.accdb,SFS11_MissingData_Importer.accdb
+DB_MASTER_SfsLocalCache.accdb,SFS11_User.accdb
+DB_MASTER_WordMergeReports.accdb,CoursesForEducatorsBrochure.accdb
+Distance Learning Grads.xlsx,Alumni.accdb
+EISP (ODBC),Auxil_Explorer_User.accdb
+EISP (ODBC),CoursesForEducatorsBrochure.accdb
+EISP (ODBC),EIS-KSIS accounting.accdb
+EISP (ODBC),FinanceOfficeAccounting.accdb
+EISP (ODBC),FinanceOfficePayrollSystem2007.accdb
+EISP (ODBC),MIP_Importer.accdb
+EISP (ODBC),Postal_User.accdb
+EISP (ODBC),SFS11_MissingData_Importer.accdb
+EISP (ODBC),SFS11_User.accdb
+EISP (ODBC),SFS18_User.accdb
+EmailLists (ODBC),Address_Tools.accdb
+EmailLists (ODBC),CampaignStatisticReports.accdb
+EmailLists (ODBC),KSIS_Lists.accdb
+EmailLists (ODBC),MailJet_Uploader.accdb
+EmailLists (ODBC),Retention.accdb
+EmailSQL (ODBC),EmailSQL.accdb
+EmailSQL (ODBC),ParkingPermits.accdb
+EmailSQL (ODBC),SFS18_User.accdb
+FILES.xls,MCS_ListRequests.accdb
+filetoimport.xls,CoursesForEducatorsBrochure.accdb
+FinanceOfficeAccounting (ODBC),Auxil_Explorer_User.accdb
+FinanceOfficeAccounting (ODBC),EIS-KSIS accounting.accdb
+FinanceOfficeAccounting (ODBC),FinanceOfficeAccounting.accdb
+FinanceOfficeAccounting (ODBC),MIP_Importer.accdb
+FinanceOfficeAccounting (ODBC),Postal_User.accdb
+FinanceOfficePayroll (ODBC),FinanceOfficePayrollSystem2007.accdb
+FinanceOfficePayroll (ODBC),MIP_Importer.accdb
+GlobalCampusFiles (ODBC),GlobalCampusFiles.accdb
+GrantFundedProjects (ODBC),GFP.accdb
+Inventory (ODBC),Inventory_v2017.accdb
+JMIH (ODBC),JMIH.accdb
+KSIS (ODBC),Address_Tools.accdb
+KSIS (ODBC),KSIS_Lists.accdb
+KSIS (ODBC),Retention.accdb
+KSIS (ODBC),SFS11_MissingData_Importer.accdb
+KSIS (ODBC),SFS11_User.accdb
+MailJet (ODBC),CampaignStatisticReports.accdb
+MailJet (ODBC),MailJet_Uploader.accdb
+MailJet (ODBC),MCS_Checklist.accdb
+MailJet (ODBC),MCS_ListRequests.accdb
+MailJet (ODBC),ParkingPermits.accdb
+MailJet (ODBC),TaskManager.accdb
+MailJet_SFS (ODBC),CampaignStatisticReports.accdb
+MailJet_SFS (ODBC),SFS_MailJet_Reporting.accdb
+MailJet_SFS (ODBC),SFS18_User.accdb
+MCS (ODBC),CampaignStatisticReports.accdb
+MCS (ODBC),MailJet_Uploader.accdb
+MCS (ODBC),MCS_Checklist.accdb
+MCS_Billing (ODBC),Auxil_Explorer_User.accdb
+MCS_Billing (ODBC),Auxil_WorkZone.accdb
+MCS_Billing (ODBC),MIP_Importer.accdb
+MCS_Billing (ODBC),Postal_User.accdb
+MCS_Forms (ODBC),MCS_Forms.accdb
+MONTHLYCPSEXPORT.xlsx,Auxil_Explorer_User.accdb
+Opt-Outs.csv,CampaignStatisticReports.accdb
+ParkingPermits (ODBC),ParkingPermits.accdb
+Programs (ODBC),ProgramsDatabase.accdb
+Programs (ODBC),Retention.accdb
+Public (ODBC),EnroleReport_Downloader.accdb
+Public (ODBC),EnroleReport_RegistrationsCrosstab.accdb
+Retention (ODBC),Retention.accdb
+RodBackEnd.accdb,Rod_User.accdb
+SFS (ODBC),SFS11_MissingData_Importer.accdb
+SFS (ODBC),SFS11_User.accdb
+SFS18 (ODBC),SFS18_User.accdb
+TaskManager (ODBC),MailJet_Uploader.accdb
+TaskManager (ODBC),TaskManager.accdb
+TrakData (ODBC),GoMembersDownloader.accdb
+TrakData (ODBC),mtksql.accdb
+TrakData2 (ODBC),mtksql.accdb
+traktemp.accdb,mtksql.accdb
+UiOpener (ODBC),ActiveDirectory.accdb
+UiOpener (ODBC),Auxil_WorkZone.accdb
+UiOpener (ODBC),CampaignStatisticReports.accdb
+UiOpener (ODBC),CNCP_Programs.accdb
+UiOpener (ODBC),Contacts.accdb
+UiOpener (ODBC),CoursesForEducatorsBrochure.accdb
+UiOpener (ODBC),DatabaseMap.accdb
+UiOpener (ODBC),Databases.accdb
+UiOpener (ODBC),EIS_Installer.accdb
+UiOpener (ODBC),EIS-KSIS accounting.accdb
+UiOpener (ODBC),FinanceOfficeAccounting.accdb
+UiOpener (ODBC),FinanceOfficePayrollSystem2007.accdb
+UiOpener (ODBC),GFP.accdb
+UiOpener (ODBC),Inventory_v2017.accdb
+UiOpener (ODBC),KSIS_Lists.accdb
+UiOpener (ODBC),MailingList_AccelleratedCourses.accdb
+UiOpener (ODBC),MailJet_SubAccount.accdb
+UiOpener (ODBC),MailJet_Uploader.accdb
+UiOpener (ODBC),MCS_LabelRequest_FileCollecter.accdb
+UiOpener (ODBC),MIP_Importer.accdb
+UiOpener (ODBC),ParkingPermits.accdb
+UiOpener (ODBC),RecentWork.accdb
+UiOpener (ODBC),Retention.accdb
+UiOpener (ODBC),SFS_MailJet_Reporting.accdb
+UiOpener (ODBC),SFS11_User.accdb
+UiOpener (ODBC),SFS18_User.accdb
+UiOpener (ODBC),TaskManager.accdb
+UiOpener (ODBC),UiOpener.accdb
+WorkZone (ODBC),Auxil_WorkZone.accdb</div>
+
+</body>
+
+<script>
+	//$("#myFile").load("qryExport.txt");
+	//readTextFile("qryExport.txt");
+	
+	function isChrome() {
+		var isChromium = window.chrome,
+			winNav = window.navigator,
+			vendorName = winNav.vendor,
+			isOpera = winNav.userAgent.indexOf("OPR") > -1,
+			isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+			isIOSChrome = winNav.userAgent.match("CriOS");
+		
+		if(isIOSChrome){
+			return true;
+		} else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+			return true;
+		} else { 
+			return false;
+		}
+	}
+	if (isChrome() !== true) {
+		alert("Must be using Chrome to run!");
+	}
+	
+</script>
+
+<script src=".\js\string_width.js?v=10032018"></script>
+<script src=".\js\readtxt.js?v=10032018"></script>
+<script src=".\js\csv_reader.js?v=10032018"></script>
+<script src=".\js\csvtoarray.js?v=10032018"></script>
+<script src=".\js\collision.js?v=10032018"></script>
+<script src=".\js\canvas_roundedrectangle.js?v=10032018"></script>
+<script src=".\js\colorisdark.js?v=10032018"></script>
+
+<script src=".\js\bubble.js?v=10032018"></script>
+<script src=".\js\dorylovesbubbles.js?v=10032018"></script>
+
+<script>
+	var main = document.getElementById("canvasScreenID");
+	var zoom = document.getElementById("zoom");
+	var ctx = main.getContext("2d")
+	var zoomCtx = zoom.getContext("2d");
+	
+	var str = document.getElementById('myFile').innerHTML;
+	var n = str.indexOf("\n");
+	//alert('newline: ' + n);
+	
+	//document.getElementById('datemodified').innerHTML = (new Date()).toLocaleDateString();
+</script>
+

@@ -23,6 +23,7 @@
 	var renderedbubbles = [];
 	var rootbubble;
 	
+	var backends_on_left = false;
 	var recursion_degrees = 2;
 	var root_bubble_default = "Public";
 	
@@ -103,10 +104,20 @@
 		} else {
 			document.getElementById("selectRecsv").value = params["degrees"];
 		}
+		if (params["side"] == null) {
+			document.getElementById("selectSide").value = "right";
+		} else {
+			document.getElementById("selectSide").value = params["side"];
+		}
 		
-		// Default bubble selected
+		// Default bubble/options selected
 		root_bubble_default = select.value;
 		recursion_degrees = document.getElementById("selectRecsv").value;
+		if (document.getElementById("selectSide").value == "right") {
+			backends_on_left = false;
+		} else {
+			backends_on_left = true;
+		}
 		
 	}
 	
@@ -178,9 +189,10 @@
 		
 		xMax = 0;
 		yMax = 0;
-		yB = 10;
-		yF = 10;
+		yB = 35;
+		yF = 35;
 		
+		// WHITE BACKGROUND
 		var x = window.innerWidth - 50;
 		if (yB < yF) var y = yF;
 		else var y = yB
@@ -190,6 +202,22 @@
 		ctx.fillRect(0, 0, canvas.width/canvasScale, canvas.height/canvasScale);
 		ctx.fill();
 		ctx.translate(0, 0); // Go to top-left
+		
+		// COLUMN HEADERS
+		ctx.font = "bold 12px Tahoma"; //"bold 12px Georgia";
+		ctx.lineWidth = 0.5;
+		ctx.globalAlpha = 1.0;
+		ctx.fillStyle = "black";
+		ctx.textAlign = "left"; 
+		if (backends_on_left == true) {
+			ctx.fillText("BACKEND DATABASES", 10, 15);
+			ctx.fillText("FRONTEND APPLICATIONS", canvas.width - 400, 15);
+		} else {
+			ctx.fillText("FRONTEND APPLICATIONS", 10, 15);
+			ctx.fillText("BACKEND DATABASES", canvas.width - 400, 15);
+		}
+		ctx.fill();
+		ctx.stroke();
 		
 		renderedbubbles = [];
 		rootbubble.setPosition();

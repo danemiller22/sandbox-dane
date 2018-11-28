@@ -107,11 +107,20 @@
 			<option value="diagram">diagram</option>
 		</select>
 		
+		&nbsp;
+		Backends:
+		<select id="selectSide" onchange="reopenUrl();">
+			<option value="left">left</option>
+			<option value="right">right</option>
+		</select>
+		
 		<img id="processing" src=".\img\processing.gif" style="display: inline-block;">
 	</div>
+	<!--
 	<div>
 		Backend databases on the <strong>left</strong> are rounded and colorful, frontend applications on the <strong>right</strong> are square and rimmed in dark blue.
 	</div>
+	-->
 </div>
 
 <canvas id="canvasScreenID"></canvas>
@@ -288,7 +297,7 @@ UiMap,UiMap.accdb</div>
 	}
 	
 	function reopenUrl(url) {
-		window.location.href = location.protocol + '//' + location.host + location.pathname + '?format=' + document.getElementById('selectFormat').value + '&database=' + document.getElementById('selectDb').value + '&degrees=' + document.getElementById('selectRecsv').value;
+		window.location.href = location.protocol + '//' + location.host + location.pathname + '?format=' + document.getElementById('selectFormat').value + '&database=' + document.getElementById('selectDb').value + '&degrees=' + document.getElementById('selectRecsv').value + '&side=' + document.getElementById('selectSide').value;
 	}
 	
 </script>

@@ -18,7 +18,7 @@ function Bubble(title, x, y, isbackend, parentbubble)
 	//if (parentbubble) this.level = parentbubble.level + 1;
 	
 	// SOURCE:  http://stackoverflow.com/questions/1152024/best-way-to-generate-a-random-color-in-javascript
-	if (this.isbackend === false) this.lineColor = '#99ffcc';
+	if (this.isbackend !== backends_on_left) this.lineColor = '#99ffcc';
 	else {
 		this.lineColor = '#000000';
 		while (this.lineColor == '#000000' || this.lineColor == '#FFFFFF' || this.lineColor == '#99ffcc' || this.lineColor.length < 7) {
@@ -62,7 +62,7 @@ Bubble.prototype.getHeight = function(){
 Bubble.prototype.setPosition = function(){
 	
 	this.x = canvas.width - 400;
-	if (this.isbackend == true) {
+	if (this.isbackend == backends_on_left) {
 		this.x = 10;
 		this.y = yB;
 		yB += this.getHeight() + yRowOffset;
@@ -100,7 +100,6 @@ Bubble.prototype.render = function(ctx){
 	
 	// Special highlight around root
 	if (this.level == 1) {
-		
 		var lvl1margin = 5;
 		ctx.beginPath();
 		ctx.strokeStyle = '#ffff00'; //'#00ad2e';
@@ -117,14 +116,14 @@ Bubble.prototype.render = function(ctx){
 	if (this.lineColor !== ctx.fillStyle) console.log('missing color: ' + this.lineColor);
 	
 	ctx.beginPath();
-	if (this.isbackend == false) {
+	if (this.isbackend == backends_on_left) {
+		// Rounded rectangle
+		roundRect(ctx, this.x, this.y, xTxt, yTxt, 10, true);
+	} else {
 		// Rim in dark blue
 		ctx.strokeStyle = '#0000FF';
 		ctx.lineWidth = 2.0;
 		ctx.rect(this.x, this.y, xTxt, yTxt);
-	} else {
-		// Rounded rectangle
-		roundRect(ctx, this.x, this.y, xTxt, yTxt, 10, true);
 	}
 	ctx.fill();
 	ctx.stroke();
@@ -169,16 +168,7 @@ Bubble.prototype.render = function(ctx){
 			
 			// RENDER LINES FOR LINKS
 			var meY, meX, themY, themX;
-			if (this.isbackend == false) {
-				
-				meX = this.x + 0;
-				meY = this.y + (this.getHeight() * 0.5);
-				themX = this.links[i].x + (this.links[i].getWidth());
-				themY = this.links[i].y + (this.links[i].getHeight() * 0.5);
-				ctx.strokeStyle = this.links[i].lineColor;
-				ctx.fillStyle = this.links[i].lineColor;
-				
-			} else {
+			if (this.isbackend == backends_on_left) {
 				
 				meX = this.x + (this.getWidth());
 				meY = this.y + (this.getHeight() * 0.5);
@@ -186,6 +176,15 @@ Bubble.prototype.render = function(ctx){
 				themY = this.links[i].y + (this.links[i].getHeight() * 0.5);
 				ctx.strokeStyle = this.lineColor;
 				ctx.fillStyle = this.lineColor;
+				
+			} else {
+				
+				meX = this.x + 0;
+				meY = this.y + (this.getHeight() * 0.5);
+				themX = this.links[i].x + (this.links[i].getWidth());
+				themY = this.links[i].y + (this.links[i].getHeight() * 0.5);
+				ctx.strokeStyle = this.links[i].lineColor;
+				ctx.fillStyle = this.links[i].lineColor;
 				
 			}
 			ctx.lineWidth = 1.0;

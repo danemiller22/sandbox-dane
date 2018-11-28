@@ -75,33 +75,43 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 </head>
-<body style="text-align: center;">
+<body>
 
-<div id="datemodified" class="copyright">04/06/2018</div>
+<div id="datemodified" class="copyright">11/28/2018</div>
 
 <div class="toolwrapper">
 	
 	<div class='title-header'>SQL Database Associations Map</div>
 
-	<p>
+	<div>
 		Select a database to view its backend/frontend associations: 
-	</p>
-	<p>
-		<select id="selectDb" onchange="generateMapSelect(this.value)"></select>
+	</div>
+	<div>
+		
+		<select id="selectDb" onchange="generateMapSelect()"></select>
+		
+		&nbsp;
 		Show degrees of separation:
-		<select id="selectRecsv" onchange="generateMapSelect(document.getElementById('selectDb').value)"></select>
-		<img id="processing" src=".\img\processing.gif" style="display: none;">
-	</p>
-	<p>
-		Fit to display:
-		<select id="selectFit" onchange="generateMapSelect(document.getElementById('selectDb').value)">
-			<option value="resize">resize</option>
-			<option value="scale">scale</option>
+		<select id="selectRecsv" onchange="generateMapSelect()">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
 		</select>
-	</p>
-	<p>
-		Backend databases are square and rimmed in dark blue, frontend applications are rounded and colorful.
-	</p>
+		
+		&nbsp;
+		Format:
+		<select id="selectFormat" onchange="reopenUrl();">
+			<option value="columns">columns</option>
+			<option value="diagram">diagram</option>
+		</select>
+		
+		<img id="processing" src=".\img\processing.gif" style="display: inline-block;">
+	</div>
+	<div>
+		Backend databases on the <strong>left</strong> are rounded and colorful, frontend applications on the <strong>right</strong> are square and rimmed in dark blue.
+	</div>
 </div>
 
 <canvas id="canvasScreenID"></canvas>
@@ -145,18 +155,41 @@
 <script src=".\js\canvas_roundedrectangle.js?v=10032018"></script>
 <script src=".\js\colorisdark.js?v=10032018"></script>
 
-<script src=".\js\bubble.js?v=10032018"></script>
-<script src=".\js\dorylovesbubbles.js?v=10032018"></script>
+<!--
+<script src=".\js\bubble_col.js?v=11282018"></script>
+<script src=".\js\dorylovesbubbles_col.js?v=11282018"></script>
+-->
+
+<script src=".\js\load_js.js?v=10032018"></script>
+<script src=".\js\get_url_parameters.js?v=10032018"></script>
+<script>
+	
+	// LOAD LIBRARY TYPE
+	
+	var params = QueryString();
+	
+	if (params["format"] == "diagram") {
+		document.getElementById('selectFormat').value = "diagram";
+		loadJS(".\\js\\bubble.js?v=11282018");
+		loadJS(".\\js\\dorylovesbubbles.js?v=11282018");
+	} else {
+		document.getElementById('selectFormat').value = "columns";
+		loadJS(".\\js\\bubble_col.js?v=11282018");
+		loadJS(".\\js\\dorylovesbubbles_col.js?v=11282018");
+	}
+	
+	function reopenUrl(url) {
+		window.location.href = location.protocol + '//' + location.host + location.pathname + '?format=' + document.getElementById('selectFormat').value + '&database=' + document.getElementById('selectDb').value + '&degrees=' + document.getElementById('selectRecsv').value;
+	}
+	
+</script>
 
 <script>
 	var main = document.getElementById("canvasScreenID");
 	var zoom = document.getElementById("zoom");
 	var ctx = main.getContext("2d")
 	var zoomCtx = zoom.getContext("2d");
-	
 	var str = document.getElementById('myFile').innerHTML;
 	var n = str.indexOf("\n");
-	//alert('newline: ' + n);
-	
-	//document.getElementById('datemodified').innerHTML = (new Date()).toLocaleDateString();
 </script>
+

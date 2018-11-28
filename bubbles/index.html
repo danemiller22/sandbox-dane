@@ -75,184 +75,158 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 </head>
-<body style="text-align: center;">
+<body>
 
-<div id="datemodified" class="copyright">04/06/2018</div>
+<div id="datemodified" class="copyright">11/28/2018</div>
 
 <div class="toolwrapper">
 	
 	<div class='title-header'>SQL Database Associations Map</div>
 
-	<p>
+	<div>
 		Select a database to view its backend/frontend associations: 
-	</p>
-	<p>
-		<select id="selectDb" onchange="generateMapSelect(this.value)"></select>
+	</div>
+	<div>
+		
+		<select id="selectDb" onchange="generateMapSelect()"></select>
+		
+		&nbsp;
 		Show degrees of separation:
-		<select id="selectRecsv" onchange="generateMapSelect(document.getElementById('selectDb').value)"></select>
-		<img id="processing" src=".\img\processing.gif" style="display: none;">
-	</p>
-	<p>
-		Fit to display:
-		<select id="selectFit" onchange="generateMapSelect(document.getElementById('selectDb').value)">
-			<option value="resize">resize</option>
-			<option value="scale">scale</option>
+		<select id="selectRecsv" onchange="generateMapSelect()">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
 		</select>
-	</p>
-	<p>
-		Backend databases are square and rimmed in dark blue, frontend applications are rounded and colorful.
-	</p>
+		
+		&nbsp;
+		Format:
+		<select id="selectFormat" onchange="reopenUrl();">
+			<option value="columns">columns</option>
+			<option value="diagram">diagram</option>
+		</select>
+		
+		<img id="processing" src=".\img\processing.gif" style="display: inline-block;">
+	</div>
+	<div>
+		Backend databases on the <strong>left</strong> are rounded and colorful, frontend applications on the <strong>right</strong> are square and rimmed in dark blue.
+	</div>
 </div>
 
 <canvas id="canvasScreenID"></canvas>
 <canvas id="zoom" width="400" height="200"></canvas>
 
-<div id="myFile" style="display: none;">Abila MIP Download.xlsx,MIP_Importer.accdb
-Abila MIP Refunds Download.xlsx,MIP_Importer.accdb
-AbilaMIP (ODBC),Auxil_WorkZone.accdb
-AbilaMIP (ODBC),MIP_CanvasCourses_InternalAccounts.accdb
-AbilaMIP (ODBC),MIP_Importer.accdb
-Alumni (ODBC),Alumni.accdb
-Alumni (ODBC),Contacts.accdb
-Canvas (ODBC),Canvas_Reports.accdb
-Canvas (ODBC),CNCP_Programs.accdb
-CNCP_Programs (ODBC),CNCP_Programs.accdb
-Contacts (ODBC),Contacts.accdb
-Contacts (ODBC),UiOpener.accdb
-Contacts_Admin (ODBC),Contacts.accdb
-DatabaseMap (ODBC),DatabaseMap.accdb
-DB_MASTER_SfsLocalCache.accdb,SFS11_MissingData_Importer.accdb
-DB_MASTER_SfsLocalCache.accdb,SFS11_User.accdb
-DB_MASTER_WordMergeReports.accdb,CoursesForEducatorsBrochure.accdb
+<div id="myFile" style="display: none;">EISP,Accounting.accdb
+FinanceOfficeAccounting,Accounting.accdb
+EmailLists,Address_Tools.accdb
+KSIS,Address_Tools.accdb
+Alumni,Alumni.accdb
 Distance Learning Grads.xlsx,Alumni.accdb
-EISP (ODBC),Auxil_Explorer_User.accdb
-EISP (ODBC),CoursesForEducatorsBrochure.accdb
-EISP (ODBC),EIS-KSIS accounting.accdb
-EISP (ODBC),FinanceOfficeAccounting.accdb
-EISP (ODBC),FinanceOfficePayrollSystem2007.accdb
-EISP (ODBC),MIP_Importer.accdb
-EISP (ODBC),Postal_User.accdb
-EISP (ODBC),SFS11_MissingData_Importer.accdb
-EISP (ODBC),SFS11_User.accdb
-EISP (ODBC),SFS18_User.accdb
-EmailLists (ODBC),Address_Tools.accdb
-EmailLists (ODBC),KSIS_LabelRequests.accdb
-EmailLists (ODBC),MailJet_Uploader.accdb
-EmailLists (ODBC),Retention.accdb
-EmailSQL (ODBC),EmailSQL.accdb
-EmailSQL (ODBC),EmailSQL_Attachments.accdb
-EmailSQL (ODBC),ParkingPermits.accdb
-EmailSQL (ODBC),SFS18_User.accdb
-FILES.xls,MCS_LabelRequests.accdb
-filetoimport.xls,CoursesForEducatorsBrochure.accdb
-FinanceOfficeAccounting (ODBC),Auxil_Explorer_User.accdb
-FinanceOfficeAccounting (ODBC),EIS-KSIS accounting.accdb
-FinanceOfficeAccounting (ODBC),FinanceOfficeAccounting.accdb
-FinanceOfficeAccounting (ODBC),MIP_Importer.accdb
-FinanceOfficeAccounting (ODBC),Postal_User.accdb
-FinanceOfficePayroll (ODBC),FinanceOfficePayrollSystem2007.accdb
-FinanceOfficePayroll (ODBC),MIP_Importer.accdb
-GrantFundedProjects (ODBC),GFP.accdb
-Inventory (ODBC),Inventory_v2017.accdb
-JMIH (ODBC),JMIH.accdb
-KCCTO (ODBC),KCCTO_CanvasAccountManager.accdb
-KCCTO (ODBC),KCCTO_Certificates.accdb
-KCCTO (ODBC),KCCTO_ContactManager.accdb
-KCCTO (ODBC),KCCTO_CourseManager.accdb
-KCCTO (ODBC),KCCTO_EmailComposer.accdb
-KCCTO (ODBC),KCCTO_Excel_SplitSheets.accdb
-KCCTO (ODBC),KCCTO_FacilityManager.accdb
-KCCTO (ODBC),KCCTO_LegacyTranscripts.accdb
-KCCTO (ODBC),KCCTO_Main.accdb
-KCCTO (ODBC),KCCTO_ReportManager.accdb
-KCCTO (ODBC),KCCTO_Wufoo.accdb
-KCCTO (ODBC),KCCTO_WufooDownload.accdb
-KSIS (ODBC),Address_Tools.accdb
-KSIS (ODBC),GlobalCampusFiles.accdb
-KSIS (ODBC),KSIS_LabelRequests.accdb
-KSIS (ODBC),KSIS_TableUpdates.accdb
-KSIS (ODBC),PowerBI_Uploader.accdb
-KSIS (ODBC),Retention.accdb
-KSIS (ODBC),SFS11_MissingData_Importer.accdb
-KSIS (ODBC),SFS11_User.accdb
-KSIS (ODBC),SFS18_User.accdb
-MailJet (ODBC),Auxil_WorkZone.accdb
-MailJet (ODBC),EmailSQL_Attachments.accdb
-MailJet (ODBC),MailJet_SubAccount.accdb
-MailJet (ODBC),MailJet_Uploader.accdb
-MailJet (ODBC),MCS_Checklist.accdb
-MailJet (ODBC),MCS_LabelRequests.accdb
-MailJet (ODBC),ParkingPermits.accdb
-MailJet (ODBC),SFS_MailJet_Reporting.accdb
-MailJet (ODBC),TaskManager.accdb
-MailJet_SFS (ODBC),MailJet_Uploader.accdb
-MailJet_SFS (ODBC),SFS_MailJet_Reporting.accdb
-MailJet_SFS (ODBC),SFS18_User.accdb
-MailMergeData.accdb,KCCTO_FacilityManager.accdb
-MailMergeData.accdb,KCCTO_ReportManager.accdb
-master (ODBC),Contacts.accdb
-master (ODBC),SQL Server Creator.accdb
-MCS (ODBC),MailJet_Uploader.accdb
-MCS (ODBC),MCS_Checklist.accdb
-MCS_Billing (ODBC),Auxil_Explorer_User.accdb
-MCS_Billing (ODBC),Auxil_WorkZone.accdb
-MCS_Billing (ODBC),MIP_Importer.accdb
-MCS_Billing (ODBC),Postal_User.accdb
-MCS_Billing (ODBC),SQL Server Creator.accdb
-MCS_Forms (ODBC),MCS_Forms.accdb
+EISP,Auxil_Explorer_User.accdb
+FinanceOfficeAccounting,Auxil_Explorer_User.accdb
+MCS_Billing,Auxil_Explorer_User.accdb
 MONTHLYCPSEXPORT.xlsx,Auxil_Explorer_User.accdb
-Ooey Gooey Registrations 2016.xlsx,KCCTO_LegacyTranscripts.accdb
-ParkingPermits (ODBC),ParkingPermits.accdb
-ParkingPermits (ODBC),SQL Server Creator.accdb
-PowerBi (ODBC),GlobalCampusFiles.accdb
-PowerBi (ODBC),PowerBI_Uploader.accdb
-Programs (ODBC),ProgramsDatabase.accdb
-Programs (ODBC),Retention.accdb
-Public (ODBC),EnroleReport_Downloader.accdb
-Public (ODBC),EnroleReport_RegistrationsCrosstab.accdb
-Public (ODBC),MailJet_SubAccount.accdb
-Public (ODBC),MailJet_Uploader.accdb
-Public (ODBC),SFS_MailJet_Reporting.accdb
-Public (ODBC),SQL Server Creator.accdb
-Retention (ODBC),Retention.accdb
-RodBackEnd.accdb,Rod_User.accdb
-SFS (ODBC),SFS11_MissingData_Importer.accdb
-SFS (ODBC),SFS11_User.accdb
-SFS (ODBC),SFS18_User.accdb
-SFS (ODBC),SQL Server Creator.accdb
-SFS18 (ODBC),SFS18_User.accdb
-TaskManager (ODBC),TaskManager.accdb
-TestDatabase (ODBC),SQL Server Creator.accdb
-TrakData (ODBC),CNCP_LabelRequests.accdb
-TrakData (ODBC),GoMembersDownloader.accdb
-UiOpener (ODBC),ActiveDirectory.accdb
-UiOpener (ODBC),Auxil_WorkZone.accdb
-UiOpener (ODBC),CNCP_Programs.accdb
-UiOpener (ODBC),Contacts.accdb
-UiOpener (ODBC),CoursesForEducatorsBrochure.accdb
-UiOpener (ODBC),DatabaseMap.accdb
-UiOpener (ODBC),EIS_Installer.accdb
-UiOpener (ODBC),EIS-KSIS accounting.accdb
-UiOpener (ODBC),FinanceOfficeAccounting.accdb
-UiOpener (ODBC),FinanceOfficePayrollSystem2007.accdb
-UiOpener (ODBC),FlexibleCourses_LabelRequests.accdb
-UiOpener (ODBC),GFP.accdb
-UiOpener (ODBC),Inventory_v2017.accdb
-UiOpener (ODBC),KSIS_LabelRequests.accdb
-UiOpener (ODBC),MailJet_SubAccount.accdb
-UiOpener (ODBC),MailJet_Uploader.accdb
-UiOpener (ODBC),MCS_Checklist.accdb
-UiOpener (ODBC),MCS_LabelRequest_FileCollecter.accdb
-UiOpener (ODBC),MIP_Importer.accdb
-UiOpener (ODBC),ParkingPermits.accdb
-UiOpener (ODBC),Retention.accdb
-UiOpener (ODBC),SFS_MailJet_Reporting.accdb
-UiOpener (ODBC),SFS11_User.accdb
-UiOpener (ODBC),SFS18_User.accdb
-UiOpener (ODBC),TaskManager.accdb
-UiOpener (ODBC),UiOpener.accdb
-UiOpener (ODBC),WorkZone_Reports.accdb
-WorkZone (ODBC),Auxil_WorkZone.accdb</div>
+AbilaMIP,Auxil_WorkZone.accdb
+MailJet,Auxil_WorkZone.accdb
+MCS_Billing,Auxil_WorkZone.accdb
+WorkZone,Auxil_WorkZone.accdb
+Canvas,Canvas_Reports.accdb
+TrakData,CNCP_LabelRequests.accdb
+Canvas,CNCP_Programs.accdb
+CNCP_Programs,CNCP_Programs.accdb
+Alumni,Contacts.accdb
+Contacts,Contacts.accdb
+Contacts_Admin,Contacts.accdb
+master,Contacts.accdb
+DB_MASTER_WordMergeReports.accdb,CoursesForEducatorsBrochure.accdb
+EISP,CoursesForEducatorsBrochure.accdb
+filetoimport.xls,CoursesForEducatorsBrochure.accdb
+EISP,EIS-KSIS accounting.accdb
+FinanceOfficeAccounting,EIS-KSIS accounting.accdb
+EmailSQL,EmailSQL.accdb
+EmailSQL,EmailSQL_Attachments.accdb
+MailJet,EmailSQL_Attachments.accdb
+Public,EnroleReport_Downloader.accdb
+Public,EnroleReport_RegistrationsCrosstab.accdb
+EISP,FinanceOfficeAccounting.accdb
+FinanceOfficeAccounting,FinanceOfficeAccounting.accdb
+EISP,FinanceOfficePayrollSystem2007.accdb
+FinanceOfficePayroll,FinanceOfficePayrollSystem2007.accdb
+GrantFundedProjects,GFP.accdb
+KSIS,GlobalCampusFiles.accdb
+PowerBi,GlobalCampusFiles.accdb
+TrakData,GoMembersDownloader.accdb
+Inventory,Inventory_v2017.accdb
+JMIH,JMIH.accdb
+EmailLists,KSISLabelRequest_TimeToEnroll.accdb
+KSIS,KSISLabelRequest_TimeToEnroll.accdb
+UiMap,LogShortcuts.vbs
+MailJet,MailJet_SubAccount.accdb
+Public,MailJet_SubAccount.accdb
+EmailLists,MailJet_Uploader.accdb
+MailJet,MailJet_Uploader.accdb
+MailJet_SFS,MailJet_Uploader.accdb
+MCS,MailJet_Uploader.accdb
+Public,MailJet_Uploader.accdb
+MailJet,MCS_Checklist.accdb
+MCS,MCS_Checklist.accdb
+MCS_Forms,MCS_Forms.accdb
+FILES.xls,MCS_LabelRequests.accdb
+MailJet,MCS_LabelRequests.accdb
+AbilaMIP,MIP_CanvasCourses_InternalAccounts.accdb
+Abila MIP Download.xlsx,MIP_Importer.accdb
+Abila MIP Refunds Download.xlsx,MIP_Importer.accdb
+AbilaMIP,MIP_Importer.accdb
+EISP,MIP_Importer.accdb
+FinanceOfficeAccounting,MIP_Importer.accdb
+FinanceOfficePayroll,MIP_Importer.accdb
+MCS_Billing,MIP_Importer.accdb
+ODBC,mtksql.accdb
+TrakData,mtksql.accdb
+TrakData2,mtksql.accdb
+traktemp.accdb,mtksql.accdb
+EmailSQL,ParkingPermits.accdb
+MailJet,ParkingPermits.accdb
+ParkingPermits,ParkingPermits.accdb
+EISP,Postal_User.accdb
+FinanceOfficeAccounting,Postal_User.accdb
+MCS_Billing,Postal_User.accdb
+KSIS,PowerBI_Uploader.accdb
+PowerBi,PowerBI_Uploader.accdb
+Programs,ProgramsDatabase.accdb
+KSIS,Retention.accdb
+Programs,Retention.accdb
+Retention,Retention.accdb
+ROD,Rod_User.accdb
+EmailSQL,ServiceNow_Wireframe.accdb
+MailJet,SFS_MailJet_Reporting.accdb
+MailJet_SFS,SFS_MailJet_Reporting.accdb
+Public,SFS_MailJet_Reporting.accdb
+DB_MASTER_SfsLocalCache.accdb,SFS11_MissingData_Importer.accdb
+EISP,SFS11_MissingData_Importer.accdb
+KSIS,SFS11_MissingData_Importer.accdb
+SFS,SFS11_MissingData_Importer.accdb
+DB_MASTER_SfsLocalCache.accdb,SFS11_User.accdb
+EISP,SFS11_User.accdb
+KSIS,SFS11_User.accdb
+SFS,SFS11_User.accdb
+EISP,SFS18_User.accdb
+EmailSQL,SFS18_User.accdb
+KSIS,SFS18_User.accdb
+MailJet_SFS,SFS18_User.accdb
+Public,SFS18_User.accdb
+SFS,SFS18_User.accdb
+SFS18,SFS18_User.accdb
+master,SQL Server Creator.accdb
+MCS_Billing,SQL Server Creator.accdb
+ParkingPermits,SQL Server Creator.accdb
+Public,SQL Server Creator.accdb
+SFS,SQL Server Creator.accdb
+TestDatabase,SQL Server Creator.accdb
+MailJet,TaskManager.accdb
+TaskManager,TaskManager.accdb
+UiMap,UiMap.accdb</div>
 
 </body>
 
@@ -290,18 +264,41 @@ WorkZone (ODBC),Auxil_WorkZone.accdb</div>
 <script src=".\js\canvas_roundedrectangle.js?v=10032018"></script>
 <script src=".\js\colorisdark.js?v=10032018"></script>
 
-<script src=".\js\bubble.js?v=10032018"></script>
-<script src=".\js\dorylovesbubbles.js?v=10032018"></script>
+<!--
+<script src=".\js\bubble_col.js?v=11282018"></script>
+<script src=".\js\dorylovesbubbles_col.js?v=11282018"></script>
+-->
+
+<script src=".\js\load_js.js?v=10032018"></script>
+<script src=".\js\get_url_parameters.js?v=10032018"></script>
+<script>
+	
+	// LOAD LIBRARY TYPE
+	
+	var params = QueryString();
+	
+	if (params["format"] == "diagram") {
+		document.getElementById('selectFormat').value = "diagram";
+		loadJS(".\\js\\bubble.js?v=11282018");
+		loadJS(".\\js\\dorylovesbubbles.js?v=11282018");
+	} else {
+		document.getElementById('selectFormat').value = "columns";
+		loadJS(".\\js\\bubble_col.js?v=11282018");
+		loadJS(".\\js\\dorylovesbubbles_col.js?v=11282018");
+	}
+	
+	function reopenUrl(url) {
+		window.location.href = location.protocol + '//' + location.host + location.pathname + '?format=' + document.getElementById('selectFormat').value + '&database=' + document.getElementById('selectDb').value + '&degrees=' + document.getElementById('selectRecsv').value;
+	}
+	
+</script>
 
 <script>
 	var main = document.getElementById("canvasScreenID");
 	var zoom = document.getElementById("zoom");
 	var ctx = main.getContext("2d")
 	var zoomCtx = zoom.getContext("2d");
-	
 	var str = document.getElementById('myFile').innerHTML;
 	var n = str.indexOf("\n");
-	//alert('newline: ' + n);
-	
-	//document.getElementById('datemodified').innerHTML = (new Date()).toLocaleDateString();
 </script>
+

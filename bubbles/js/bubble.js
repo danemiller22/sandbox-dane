@@ -403,7 +403,7 @@ Bubble.prototype.setLinkPositions = function(recIdx = 0){
 		if (!inArray(this.links[i].title, collisionchecklist)) {
 			collisionchecklist.push(this.links[i].title);
 			
-			this.links[i].level = this.level + 1;
+			if (this.links[i].level == 0) this.links[i].level = this.level + 1;
 			this.links[i].parentbubble = this;
 			
 			alternate *= -1;

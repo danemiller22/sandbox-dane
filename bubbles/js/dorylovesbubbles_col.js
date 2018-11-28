@@ -4,27 +4,23 @@
 //function beginMapping(data) {
 
     // Create the canvas
-    var canvasSize = 1500; //window.innerWidth; //900;
+    var canvasSize = 800; //8000; //window.innerWidth; //900;
     var canvasScale = 1; //canvasSize/1400;
     var canvas = document.getElementById('canvasScreenID'); //document.createElement("canvas");
     var ctx = canvas.getContext("2d");
-    canvas.style.display='inline-block';
-    //canvas.style.border='3px dashed black';
+    //canvas.style.display='inline-block';
+	//canvas.style.border='3px dashed black';
 	canvas.width = canvasSize;
-    canvas.height = canvasSize;
+    canvas.height = 8000;
     //canvas.style.margin='auto';
 	
-	canvas.onclick = function(){
-		if (document.getElementById('selectFit').value == "scale") document.getElementById('selectFit').value = "resize";
-		else document.getElementById('selectFit').value = "scale";
-		
-		generateMapSelect(document.getElementById('selectDb').value);
-	}
+	var yB = 0, yF = 0;
 	
 	// Math constants / etc
 	var TO_RADIANS = Math.PI/180;
 	
 	var mybubbles = [];
+	var renderedbubbles = [];
 	var rootbubble;
 	
 	var recursion_degrees = 2;
@@ -35,6 +31,8 @@
 	xMin = 0;
 	yMax = 0;
 	yMin = 0;
+	
+	var yRowOffset = 20;
 	
 	function generateSelect(inputID, backend_list, frontend_list) {
 		var select = document.getElementById(inputID);
@@ -134,8 +132,8 @@
 		for (var i=0; i<myCSV.length; i++) 
 		{
 			//if (myCSV[i][0] === dbname) {
-				backend = spawnNewBubble(myCSV[i][0], 0, 0, true);
-				frontend = spawnNewBubble(myCSV[i][1], 0, 0, false);
+				backend = spawnNewBubble(myCSV[i][0], true);
+				frontend = spawnNewBubble(myCSV[i][1], false);
 				
 				backend.addLink(frontend);
 				frontend.addLink(backend);
@@ -158,91 +156,44 @@
 		*/
 	}
 	
-	var beenrendered = [];
-	var collisionchecklist = [];
 	function render() {
 		if (document.getElementById('selectDb').value == null || document.getElementById('selectDb').value == '' || document.getElementById('selectDb').value == ' ') return;
 		
+		recursion_degrees = document.getElementById("selectRecsv").value;
+		
 		ctx.save();
-		
-		// Render background
-		//ctx.fillStyle = "#F4F4F4";
-		//ctx.fillRect(0, 0, canvasSize, canvasSize);
-		//ctx.fill();
-		
-		//ctx.scale(canvasScale, canvasScale);
-		//ctx.translate((canvasSize/canvasScale)/2, (canvasSize/canvasScale)/2);
 		
 		// Reset Bubbles
 		for (var i = 0; i < mybubbles.length; i++) {
 			mybubbles[i].level = 0;
 			mybubbles[i].x = 0;
 			mybubbles[i].y = 0;
+			mybubbles[i].rendered = false;
 		}
 		
 		// Render Bubbles
 		rootbubble.x = 0;
 		rootbubble.y = 0;
 		rootbubble.level = 1;
+		
 		xMax = 0;
-		xMin = 0;
 		yMax = 0;
-		yMin = 0;
-		var recIdx = document.getElementById("selectRecsv").value;
-		beenrendered = [];
-		collisionchecklist = [];
-		rootbubble.setLinkPositions(recIdx);
-		preventOverlap();
+		yB = 10;
+		yF = 10;
 		
-		//if (document.getElementById('selectFit').value === "scale")
-		if (false)
-		{
-			document.getElementById('canvasScreenID').className = "zoom_in";
-			
-			canvas.width = canvasSize;
-			canvas.height = canvasSize;
-			
-			// Render background
-			ctx.fillStyle = "#FFFFFF"; // "#F4F4F4";
-			ctx.fillRect(0, 0, canvas.width/canvasScale, canvas.height/canvasScale);
-			ctx.fill();
-			// Scale content to fit canvas
-			//console.log("x=" + (xMax-xMin) + ",y=" + (yMax-yMin));
-			if ((xMax-xMin) > canvasSize || (yMax-yMin) > canvasSize) {
-				var xScale = canvasSize/(xMax-xMin + 100);
-				var yScale = canvasSize/(yMax-yMin + 100);
-				if (xScale < yScale) canvasScale = xScale;
-				else canvasScale = yScale;
-				ctx.scale(canvasScale, canvasScale);
-			}
-			console.log("scale=" + canvasScale);
-			// Midpoint
-			ctx.translate(((canvasSize/canvasScale)/2)-(xMax+xMin)/2, ((canvasSize/canvasScale)/2)-(yMax+yMin)/2);
-			
-		} 
-		else 
-		{
-			document.getElementById('canvasScreenID').className = "zoom_out";
-			
-			// Scale canvas to fit contents
-			//console.log("x=" + (xMax-xMin) + ",y=" + (yMax-yMin));
-			canvas.width = (xMax-xMin) + 100;
-			canvas.height = (yMax-yMin) + 100;
-			// Render background
-			ctx.fillStyle = "#FFFFFF"; // "#F4F4F4";
-			ctx.fillRect(0, 0, canvas.width/canvasScale, canvas.height/canvasScale);
-			ctx.fill();
-			// Go to center
-			ctx.translate((canvas.width/2)-(xMax+xMin)/2, (canvas.height/2)-(yMax+yMin)/2);
-			
-		}
+		var x = window.innerWidth - 50;
+		if (yB < yF) var y = yF;
+		else var y = yB
+		canvas.width = x; //xMax;
+		canvas.height = 4000; //y + 1000; //yMax;
+		ctx.fillStyle = "#FFFFFF"; // "#F4F4F4";
+		ctx.fillRect(0, 0, canvas.width/canvasScale, canvas.height/canvasScale);
+		ctx.fill();
+		ctx.translate(0, 0); // Go to top-left
 		
-		
-		beenrendered = [];
-		rootbubble.renderConnections(ctx, recIdx);
-		
-		beenrendered = [];
-		rootbubble.render(ctx, recIdx);
+		renderedbubbles = [];
+		rootbubble.setPosition();
+		rootbubble.render(ctx);
 		
 		ctx.restore();
 	}
@@ -250,10 +201,25 @@
 	//----------------------------------------------
 	// begin building world here
 	
-	function spawnNewBubble(title, x, y, isbackend) {
+	function spawnNewBubble(title, isbackend) {
 		// Prevent duplicates
 		var exisBub = getExistingBubble(title);
 		if (exisBub) return exisBub;
+		
+		var x = 0, y = 0;
+		
+		if (isbackend == true) {
+			yB += 20;
+			x = 20;
+			y = yB;
+		}
+		
+		if (isbackend == false) {
+			yF += 20;
+			x = 500;
+			y = yF;
+		}
+		
 		// Make new Bubble
 		var newbubble = new Bubble(title, x, y, isbackend);
 		mybubbles.push(newbubble);
@@ -366,74 +332,6 @@
 		document.getElementById('processing').style.display = "none";
 	}
 	//------------
-	
-	
-	function preventOverlap() {
-		
-		xMax = 0;
-		xMin = 0;
-		yMax = 0;
-		yMin = 0;
-		
-		var bump_distance = 30;
-		
-		// Reposition to prevent overlap
-		var bubble1, bubble2;
-		for(var i=0; i<collisionchecklist.length; i++) {
-			//setTimeout(function(){ 
-				
-				bubble1 = getExistingBubble(collisionchecklist[i]);
-				for(var j=0; j<collisionchecklist.length; j++) {
-					if (collisionchecklist[i] !== collisionchecklist[j]) 
-					{
-						bubble2 = getExistingBubble(collisionchecklist[j]);
-						
-						if (bubble1.hasOverlap(bubble2) === true)
-						{
-							console.log("repositioning " + bubble1.title + "(" + bubble1.x + "," + bubble1.y + ") in relation to " + bubble2.title + "(" + bubble2.x + "," + bubble2.y + ")");
-							
-							// X
-							//if (bubble1.y >= bubble2.y) bubble1.y += (bubble1.getHeight() + bubble2.getHeight() + bump_distance);
-							//else bubble1.y -= (bubble1.getHeight() + bubble2.getHeight() + bump_distance);
-							bubble1.y += (bubble1.getHeight() + bubble2.getHeight() + bump_distance);
-							// Y
-							if (bubble1.hasOverlap(bubble2) === true)
-							{
-								//if (bubble1.x >= bubble2.x) bubble1.x += (bubble1.getWidth() + bubble2.getWidth() + bump_distance);
-								//else bubble1.x -= (bubble1.getWidth() + bubble2.getWidth() + bump_distance);
-								bubble1.x += (bubble1.getWidth() + bubble2.getWidth() + bump_distance);
-							}
-							
-							/*
-							// Re-adjust margins of canvas
-							var m = 55;
-							if (xMax < bubble1.x + bubble1.getWidth()/2) xMax = bubble1.x + bubble1.getWidth()/2 + m;
-							if (xMin > bubble1.x - bubble1.getWidth()/2) xMin = bubble1.x - bubble1.getWidth()/2 - m;
-							if (yMax < bubble1.y + bubble1.getHeight()/2) yMax = bubble1.y + bubble1.getHeight()/2 + m;
-							if (yMin > bubble1.y - bubble1.getHeight()/2) yMin = bubble1.y - bubble1.getHeight()/2 - m;
-							*/
-							
-							// Reset
-							j=0;
-							//i=0;
-						}
-						
-					}
-				}
-				
-				// Re-adjust margins of canvas
-				var m = 55;
-				if (xMax < bubble1.x + bubble1.getWidth()/2) xMax = bubble1.x + bubble1.getWidth()/2 + m;
-				if (xMin > bubble1.x - bubble1.getWidth()/2) xMin = bubble1.x - bubble1.getWidth()/2 - m;
-				if (yMax < bubble1.y + bubble1.getHeight()/2) yMax = bubble1.y + bubble1.getHeight()/2 + m;
-				if (yMin > bubble1.y - bubble1.getHeight()/2) yMin = bubble1.y - bubble1.getHeight()/2 - m;
-				
-			//}, 10);
-		}
-		
-	}
-	
-	
 	
 	
 	// end building world here

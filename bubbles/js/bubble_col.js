@@ -48,11 +48,8 @@ Bubble.prototype.addLink = function(nwLnk){
 //	this.lines.push(nwLnk);
 //};
 Bubble.prototype.getWidth = function(){
-	//return this.title.width("bold 12px Georgia") + 10;
-	//return ctx.measureText(this.title).width,10,50)
-	
-	var myTitle = this.title;
-	return this.title.width(ctx.font) + 10;
+	//return this.title.width(ctx.font) + 10;
+	return 300;
 };
 Bubble.prototype.getHeight = function(){
 	return this.title.height("bold 12px Georgia") * (3/2);

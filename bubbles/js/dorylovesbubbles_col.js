@@ -211,10 +211,10 @@
 		ctx.textAlign = "left"; 
 		if (backends_on_left == true) {
 			ctx.fillText("BACKEND DATABASES", 10, 15);
-			ctx.fillText("FRONTEND APPLICATIONS", canvas.width - 400, 15);
+			ctx.fillText("FRONTEND APPLICATIONS", canvas.width - 310, 15);
 		} else {
 			ctx.fillText("FRONTEND APPLICATIONS", 10, 15);
-			ctx.fillText("BACKEND DATABASES", canvas.width - 400, 15);
+			ctx.fillText("BACKEND DATABASES", canvas.width - 310, 15);
 		}
 		ctx.fill();
 		ctx.stroke();

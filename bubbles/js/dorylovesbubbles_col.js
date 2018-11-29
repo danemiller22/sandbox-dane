@@ -33,7 +33,7 @@
 	yMax = 0;
 	yMin = 0;
 	
-	var yRowOffset = 20;
+	var yRowOffset = 40;
 	
 	function generateSelect(inputID, backend_list, frontend_list) {
 		var select = document.getElementById(inputID);
